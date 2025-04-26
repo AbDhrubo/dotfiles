@@ -4,14 +4,19 @@ if not vim.loop.fs_stat(lazypath) then
     "git",
     "clone",
     "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "https://github.com/folke/lazy.nvim.git", -- this one can stay HTTPS
+    "--branch=stable",
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
--- local opts = {}
-
 require("vim-options")
-require("lazy").setup("plugins")
+
+require("lazy").setup("plugins", {
+  git = {
+    -- This makes Lazy.nvim use SSH instead of HTTPS
+    url_format = "git@github.com:%s.git",
+  },
+})
+
